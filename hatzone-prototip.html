@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HAT-ZONE</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
+<style>
+/* =============== Sağlanan tasarım sistemi (styles.css + local.css) =============== */
+:root{--blue:#2864eb;--ink:#13213e;--paper:#f8faff;--line:#e9edf5;--radius:22px}*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:15px 'DM Sans',sans-serif}.app-shell{max-width:1440px;margin:auto;min-height:100vh;display:flex}.sidebar{width:245px;background:#fff;padding:35px 25px;display:flex;flex-direction:column;position:fixed;inset:0 auto 0 max(0px,calc((100vw - 1440px)/2));border-right:1px solid var(--line)}.brand{font:800 24px 'Plus Jakarta Sans';letter-spacing:-1.5px;color:var(--ink);text-decoration:none;display:flex;align-items:center;gap:9px}.brand-mark{display:grid;place-items:center;width:31px;height:31px;background:var(--blue);color:#fff;border-radius:10px;font-size:18px}.nav-links{display:grid;gap:7px;margin-top:55px}.nav-link,.appearance,.bottom-nav button{font:600 15px 'DM Sans';border:0;background:transparent;color:#71809a;cursor:pointer;text-align:left;padding:13px 14px;border-radius:12px}.nav-link span{font-size:21px;display:inline-block;width:31px;vertical-align:middle}.nav-link.active{background:#edf3ff;color:var(--blue)}.sidebar-footer{margin-top:auto}.appearance{color:var(--ink);padding:10px 0}.sidebar-footer p{font-size:12px;color:#a2adbd;line-height:1.6}.content{width:calc(100% - 245px);margin-left:245px;padding:42px max(42px,5vw) 90px}.topbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:30px}.eyebrow,.tag{font-size:10px;font-weight:700;letter-spacing:1.2px;color:#8490a3;margin:0 0 8px}.topbar h1,h2,h3{font-family:'Plus Jakarta Sans';letter-spacing:-1.2px;margin:0}.topbar h1{font-size:25px}.topbar h1 span{color:var(--blue)}.avatar,.profile-avatar{border:0;background:#f9c8bc;color:#71372e;font-weight:700;border-radius:50%;width:42px;height:42px;cursor:pointer}.hero-card{background:#eef4ff;min-height:337px;border-radius:var(--radius);display:flex;overflow:hidden;position:relative}.hero-copy{padding:42px 46px;width:60%;z-index:1}.pill{font-size:10px;letter-spacing:1px;font-weight:700;color:var(--blue);margin:0 0 13px}.hero-copy h2{font-size:38px;line-height:1.16}.hero-copy h2 em{font-style:normal;color:var(--blue)}.hero-copy>p:not(.pill){color:#63728b;line-height:1.55;max-width:390px}.hero-actions{display:flex;gap:10px;margin-top:23px}button{font-family:inherit}.primary,.soft{border:0;border-radius:10px;padding:12px 16px;font-weight:700;cursor:pointer}.primary{background:var(--blue);color:#fff}.primary span{font-size:18px;margin-left:18px}.soft{background:#fff;color:var(--ink);border:1px solid #e1e8f4}.hero-art{width:45%;position:relative;background:linear-gradient(135deg,#cddfff,#e7efff);overflow:hidden}.sun{position:absolute;width:120px;height:120px;background:#fff5c4;border-radius:50%;top:44px;right:70px}.ground{position:absolute;width:130%;height:130px;bottom:-70px;left:-20%;border-radius:50%;background:#a8d9b3}.people{position:absolute;width:65px;height:65px;border-radius:50% 50% 16px 16px;color:#13213e;text-align:center;padding-top:15px;font-size:30px}.p-one{background:#ffd1c5;bottom:60px;left:20%}.p-two{background:#ffdc88;bottom:38px;left:42%}.p-three{background:#bba5ef;bottom:64px;right:16%}.section-heading{display:flex;align-items:end;justify-content:space-between;margin:43px 0 18px}.section-heading h2{font-size:23px}.text-button{border:0;background:transparent;color:var(--blue);font-weight:700;cursor:pointer}.action-grid,.game-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}.action-card{border:0;border-radius:17px;text-align:left;padding:22px;cursor:pointer;min-height:152px;color:var(--ink);transition:transform .2s}.action-card:hover,.game-card:hover{transform:translateY(-3px)}.action-card.blue{background:#e9f0ff}.action-card.peach{background:#fff0eb}.action-card.lavender{background:#f2efff}.action-icon{font-size:27px;display:block;margin-bottom:22px}.action-card strong,.action-card small{display:block}.action-card small,.subtle{color:#71809a;margin-top:4px}.suggestion,.ai-game{display:flex;align-items:center;gap:17px;background:#fff;border:1px solid var(--line);padding:17px 20px;border-radius:16px;margin-top:30px}.suggestion-icon{width:42px;height:42px;border-radius:13px;background:#e8efff;color:var(--blue);display:grid;place-items:center;font-size:20px}.suggestion h3,.ai-game h3{font-size:15px}.suggestion p:not(.eyebrow),.ai-game p:not(.eyebrow){color:#748095;margin:5px 0 0}.suggestion .soft{margin-left:auto}.view{display:none}.view.active{display:block}.map-layout{display:grid;grid-template-columns:1.7fr 1fr;gap:18px}.map-canvas{height:470px;background:#eaf0e8;border-radius:20px;position:relative;overflow:hidden;background-image:linear-gradient(25deg,transparent 46%,#d5dfd2 47%,#d5dfd2 49%,transparent 50%),linear-gradient(105deg,transparent 58%,#d5dfd2 59%,#d5dfd2 61%,transparent 62%)}.map-water{position:absolute;background:#c8e6f4;width:72%;height:38%;transform:rotate(-19deg);right:-15%;top:14%;border-radius:48%}.map-label{position:absolute;font-weight:700;color:#6e7e72;font-size:13px}.l-one{left:18%;top:26%}.l-two{left:55%;top:57%}.l-three{right:8%;top:32%}.pin{border:4px solid #fff;background:var(--blue);color:var(--blue);box-shadow:0 2px 7px #3556a855;border-radius:50%;width:23px;height:23px;position:absolute;cursor:pointer}.pin-one{left:26%;top:43%}.pin-two{left:57%;top:48%}.pin-three{right:15%;top:66%}.place-list{background:#fff;padding:22px;border:1px solid var(--line);border-radius:18px}.place-card{display:flex;gap:11px;padding:15px 0;border-bottom:1px solid var(--line)}.place-card:last-child{border:0}.place-image{width:64px;height:64px;border-radius:12px;flex:none}.coffee{background:linear-gradient(135deg,#81614e,#f3d5a3)}.park{background:linear-gradient(135deg,#396e42,#c6dda8)}.place-card strong{font-size:14px}.place-card p,.place-card small{font-size:12px;color:#788397;margin:5px 0}.game-card{border-radius:18px;padding:26px;min-height:254px;transition:transform .2s}.game-card>span{font-size:38px}.game-card h3{font-size:21px}.game-card>p:not(.tag){color:#576680;line-height:1.45}.yellow{background:#fff3c4}.pink{background:#ffe5eb}.mint{background:#dbf5ed}.start-game{border:0;background:rgba(255,255,255,.75);font-weight:700;color:var(--ink);padding:10px 13px;border-radius:9px;cursor:pointer;margin-top:8px}.ai-game{max-width:650px}.memory-grid{display:grid;grid-template-columns:1.25fr 1fr 1fr;gap:17px}.memory{background:#fff;border:1px solid var(--line);border-radius:16px;overflow:hidden}.memory-photo{height:185px}.large .memory-photo{height:245px}.photo-one{background:linear-gradient(160deg,#e99f62,#673b64 70%,#15365b)}.photo-two{background:linear-gradient(150deg,#c08c58,#f6ddae 45%,#809c74)}.photo-three{background:linear-gradient(160deg,#262e4b,#bc74a5 48%,#fecb67)}.memory>div:last-child{padding:16px}.memory h3{font-size:16px}.memory p:last-child{font-size:12px;color:#8590a2}.profile-cover{height:155px;border-radius:18px;background:linear-gradient(120deg,#bcd5ff,#f1f6ff 45%,#d9efff)}.profile-card{background:#fff;border:1px solid var(--line);padding:0 30px 25px;border-radius:0 0 18px 18px;position:relative}.profile-avatar{width:82px;height:82px;border:5px solid #fff;font-size:26px;margin-top:-40px}.profile-card .soft{float:right;margin-top:16px}.profile-card h2{margin-top:12px}.profile-card>p{color:#778398}.profile-stats{display:flex;gap:45px;margin-top:25px}.profile-stats div{display:grid;gap:4px}.profile-stats span{color:#8590a2;font-size:12px}.compact{margin-top:35px}.bottom-nav{display:none}dialog{border:0;border-radius:20px;width:min(430px,90vw);padding:30px;box-shadow:0 25px 80px #13213e33;color:var(--ink)}dialog::backdrop{background:#13213e66}.close{float:right;border:0;background:#eef2fa;font-size:21px;width:30px;height:30px;border-radius:50%;cursor:pointer}.dialog-title{font:700 23px 'Plus Jakarta Sans';margin:14px 0 9px}.dialog-copy{color:#71809a;line-height:1.55}.dialog-field{width:100%;border:1px solid #dce3f0;border-radius:10px;padding:12px;margin:13px 0;font:inherit}.toast{position:fixed;bottom:24px;left:50%;transform:translate(-50%,100px);background:#13213e;color:#fff;padding:12px 18px;border-radius:10px;transition:transform .25s;z-index:10}.toast.show{transform:translate(-50%,0)}body.dark{--paper:#111a2c;--ink:#edf3ff;--line:#263550}.dark .sidebar,.dark .suggestion,.dark .place-list,.dark .memory,.dark .profile-card{background:#18243a}.dark .soft,.dark .start-game{background:#263550;color:#edf3ff;border-color:#344867}.dark .nav-link.active{background:#223b70}.dark .hero-card{background:#1b315c}.dark .profile-cover{background:#243c6a}@media(max-width:800px){.sidebar{display:none}.content{width:100%;margin:0;padding:25px 18px 85px}.topbar{margin-bottom:22px}.topbar h1{font-size:20px}.hero-card{min-height:420px}.hero-copy{width:100%;padding:29px;padding-bottom:198px}.hero-copy h2{font-size:31px}.hero-art{position:absolute;width:100%;height:190px;bottom:0;left:0;opacity:.7}.action-grid,.game-grid{grid-template-columns:1fr;gap:11px}.action-card{min-height:105px;padding:17px}.action-icon{margin-bottom:10px}.suggestion .soft{display:none}.map-layout{grid-template-columns:1fr}.map-canvas{height:350px}.place-list{display:none}.memory-grid{grid-template-columns:1fr 1fr}.memory.large{grid-column:span 2}.bottom-nav{position:fixed;display:flex;justify-content:space-around;align-items:center;height:66px;bottom:0;left:0;right:0;background:#fff;border-top:1px solid var(--line);z-index:4}.bottom-nav button{font-size:19px;text-align:center;padding:7px;color:#71809a;display:grid;gap:2px}.bottom-nav span{font-size:10px}.bottom-nav button.active{color:var(--blue)}.dark .bottom-nav{background:#18243a}.section-heading{margin-top:30px}.section-heading h2{font-size:20px}.memory-photo{height:145px}.large .memory-photo{height:190px}.profile-card{padding:0 18px 22px}}
+.auth-screen{position:fixed;inset:0;z-index:20;display:grid;place-items:center;background:linear-gradient(125deg,#e7f0ff,#f9fbff 50%,#e4f3ff);padding:24px}.auth-screen.hidden{display:none}.auth-brand{position:absolute;top:32px;left:42px;font:800 25px 'Plus Jakarta Sans';display:flex;align-items:center;gap:9px}.auth-card{width:min(440px,100%);background:#fff;padding:38px;border:1px solid #e3eafa;border-radius:22px;box-shadow:0 22px 60px #34528619}.auth-card h1{font:700 28px 'Plus Jakarta Sans'}.auth-copy{color:#71809a;line-height:1.5;margin:9px 0 24px}.auth-card form{display:grid;gap:14px}.auth-card label{font-size:13px;font-weight:700;display:grid;gap:7px}.auth-card input{border:1px solid #dbe3f1;padding:12px;border-radius:10px;font:inherit}.auth-submit{width:100%;margin-top:7px}.auth-switch{text-align:center;color:#71809a;font-size:13px}.auth-switch button{border:0;background:transparent;color:#2864eb;font-weight:700;cursor:pointer}.user-photo{width:100%;object-fit:cover;display:block}@media(max-width:800px){.auth-brand{left:20px;top:20px}.auth-card{padding:28px 22px;margin-top:30px}}
+
+/* =============== Mevcut özellikler için gereken küçük tamamlayıcı stiller =============== */
+.auth-err{color:#c0392b;font-size:12.5px;min-height:14px;margin-top:-4px}
+.feed-card{display:flex;gap:14px;background:#fff;border:1px solid var(--line);border-radius:16px;padding:16px;margin-bottom:14px}
+.feed-photo{width:104px;height:88px;border-radius:12px;flex:none;display:flex;align-items:center;justify-content:center;font-size:26px;color:#fff}
+.feed-head{display:flex;align-items:center;gap:8px;margin-bottom:5px}
+.feed-user{font-weight:700;font-size:13.5px}
+.feed-time{font-size:11.5px;color:#a2adbd;margin-left:auto}
+.feed-loc{font-size:12px;color:var(--blue);font-weight:700;margin:2px 0}
+.feed-note{font-size:13px;color:#576680;line-height:1.45;margin:0}
+.mini-avatar{width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:11px;flex:none}
+.tag-row{display:flex;gap:6px;flex-wrap:wrap;margin:10px 0}
+.chip{font-size:10.5px;font-weight:700;padding:5px 10px;border-radius:20px;background:rgba(255,255,255,.6);color:#13213e}
+.result-box{margin-top:14px;background:#edf3ff;border-radius:12px;padding:14px;font-size:13px;line-height:1.5;color:#324063;display:none}
+.dropzone{border:1.5px dashed #c7d6f5;border-radius:16px;padding:24px;text-align:center;background:#f5f8ff;cursor:pointer;margin-bottom:16px}
+.dropzone span{display:block;font-size:13px;color:var(--blue);font-weight:700}
+.dropzone small{color:#8590a2}
+.mem-preview-img{width:100%;height:150px;object-fit:cover;border-radius:12px;margin-bottom:10px}
+.invite-box{display:flex;align-items:center;gap:8px;background:#f5f8ff;border:1px solid var(--line);border-radius:12px;padding:9px 9px 9px 16px;margin:14px 0 6px}
+.invite-box code{flex:1;font-size:12.5px;color:var(--blue);overflow-x:auto;white-space:nowrap}
+.swatch-row{display:flex;gap:10px;margin:14px 0 20px}
+.swatch{width:27px;height:27px;border-radius:50%;cursor:pointer;border:3px solid transparent}
+.swatch.active{border-color:var(--ink)}
+.memory-photo-real{width:100%;height:100%;object-fit:cover;display:block}
+.memory-photo{display:flex;align-items:center;justify-content:center;color:#fff;font-size:26px}
+.select-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:10px}
+.select-row select{border:1px solid #dbe3f1;border-radius:10px;padding:10px;font:inherit;background:#fff}
+.ai-block{display:block;max-width:650px}
+.ai-block .top{display:flex;align-items:center;gap:14px}
+.ai-block .body{flex:1}
+.game-dialog{max-width:560px}.game-dialog h3{margin:12px 0 6px;font-size:24px}.game-dialog .dialog-copy{margin-bottom:18px}.truth-entry{display:grid;gap:10px;margin:16px 0}.truth-entry input{width:100%;border:1px solid #dbe3f1;border-radius:10px;padding:12px;font:inherit}.truth-card{background:#f5f8ff;border-radius:12px;padding:13px 15px;margin:8px 0;cursor:pointer;border:1px solid transparent;transition:border-color .15s,background .15s}.truth-card:hover{border-color:var(--blue)}.truth-card.correct{background:#dcf6e8;border-color:#36a269}.truth-card.wrong{background:#ffe9e9;border-color:#e05c5c}.sis-board{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:18px 0}.sis-field{display:grid;gap:6px;font-size:12px;font-weight:700}.sis-field input{width:100%;border:1px solid #dbe3f1;border-radius:10px;padding:11px 9px;font:inherit}.sis-score{background:#edf3ff;border-radius:12px;padding:13px 15px;line-height:1.5}.game-dialog .primary{margin-top:14px}
+.hidden{display:none!important}
+@media(max-width:800px){.feed-photo{width:76px;height:76px}}
+@media(max-width:520px){.sis-board{grid-template-columns:1fr 1fr}}
+</style>
+</head>
+<body>
+
+<!-- ================= AUTH SCREEN ================= -->
+<div id="screen-auth" class="auth-screen">
+  <div class="auth-brand"><span class="brand-mark">H</span> HAT-ZONE</div>
+  <div class="auth-card">
+    <h1 id="auth-title">Giriş yap</h1>
+    <p class="auth-copy" id="auth-copy">Sonsuz akışa değil, gerçek buluşmalara giden hat. Devam etmek için giriş yap.</p>
+
+    <form id="form-login" onsubmit="event.preventDefault(); doLogin();">
+      <label>E-posta<input type="email" id="login-email" placeholder="ornek@eposta.com"></label>
+      <label>Şifre<input type="password" id="login-pass" placeholder="••••••••"></label>
+      <div class="auth-err" id="login-err"></div>
+      <button class="primary auth-submit" type="submit">Hesabıma gir</button>
+    </form>
+
+    <form id="form-signup" class="hidden" onsubmit="event.preventDefault(); doSignup();">
+      <label>Kullanıcı adı<input type="text" id="su-user" placeholder="hatzoneli"></label>
+      <label>E-posta<input type="email" id="su-email" placeholder="ornek@eposta.com"></label>
+      <label>Şifre<input type="password" id="su-pass" placeholder="En az 6 karakter"></label>
+      <div class="auth-err" id="su-err"></div>
+      <button class="primary auth-submit" type="submit">Hesap oluştur</button>
+    </form>
+
+    <p class="auth-switch" style="margin-top:18px">
+      <span id="switch-text">Hesabın yok mu?</span>
+      <button type="button" onclick="switchAuthTab()" id="switch-btn">Kayıt ol</button>
+    </p>
+  </div>
+</div>
+
+<!-- ================= MAIN APP ================= -->
+<div id="screen-app" class="app-shell hidden">
+
+  <aside class="sidebar">
+    <a class="brand"><span class="brand-mark">H</span> HAT-ZONE</a>
+    <nav class="nav-links">
+      <button class="nav-link active" data-view="feed" onclick="goTo('feed')"><span>🧭</span>Akış</button>
+      <button class="nav-link" data-view="harita" onclick="goTo('harita')"><span>🗺️</span>Harita</button>
+      <button class="nav-link" data-view="oyunlar" onclick="goTo('oyunlar')"><span>🎮</span>Oyunlar</button>
+      <button class="nav-link" data-view="anilar" onclick="goTo('anilar')"><span>📸</span>Anılarım</button>
+      <button class="nav-link" data-view="profil" onclick="goTo('profil')"><span>👤</span>Profil</button>
+    </nav>
+    <div class="sidebar-footer">
+      <p>Ekip: İleri Hat<br>TEKNOFEST Sosyal İnovasyon</p>
+    </div>
+  </aside>
+
+  <main class="content">
+
+    <div class="topbar">
+      <div>
+        <p class="eyebrow" id="view-eyebrow">HAT-ZONE</p>
+        <h1 id="view-title">Akış</h1>
+      </div>
+      <button class="avatar" id="topbar-avatar" onclick="goTo('profil')">?</button>
+    </div>
+
+    <!-- ---- AKIŞ ---- -->
+    <section id="view-feed" class="view active">
+      <div class="hero-card">
+        <div class="hero-copy">
+          <p class="pill">GERÇEK HAYATTA SOSYALLEŞ</p>
+          <h2>Ekrandan çık, <em>hattına</em> katıl.</h2>
+          <p>Konum tabanlı keşif, parti oyunları ve anı paylaşımıyla çevrendeki insanlarla yüz yüze bir araya gel.</p>
+          <div class="hero-actions">
+            <button class="primary" onclick="goTo('anilar')">Anı paylaş<span>→</span></button>
+            <button class="soft" onclick="goTo('harita')">Haritayı gör</button>
+          </div>
+        </div>
+        <div class="hero-art">
+          <div class="sun"></div>
+          <div class="ground"></div>
+          <div class="people p-one">🎲</div>
+          <div class="people p-two">📍</div>
+          <div class="people p-three">📸</div>
+        </div>
+      </div>
+
+      <div class="action-grid">
+        <button class="action-card blue" onclick="goTo('anilar')">
+          <span class="action-icon">📸</span>
+          <strong>Anı paylaş</strong>
+          <small>Gittiğin bir yeri fotoğrafla anlat</small>
+        </button>
+        <button class="action-card peach" onclick="goTo('oyunlar')">
+          <span class="action-icon">🎲</span>
+          <strong>Oyun öner</strong>
+          <small>Grubuna uygun parti oyunu bul</small>
+        </button>
+        <button class="action-card lavender" onclick="goTo('oyunlar')">
+          <span class="action-icon">🧭</span>
+          <strong>Yer öner</strong>
+          <small>Şehrinde yeni bir mekan keşfet</small>
+        </button>
+      </div>
+
+      <div class="section-heading">
+        <h2>Hattındaki son duraklar</h2>
+        <button class="text-button" onclick="renderFeed()">Yenile</button>
+      </div>
+      <div id="feed-list"></div>
+    </section>
+
+    <!-- ---- HARITA ---- -->
+    <section id="view-harita" class="view">
+      <div class="map-layout">
+        <div class="map-canvas" id="map-canvas" style="background:none;padding:0">
+          <div id="map" style="width:100%;height:100%;border-radius:20px;"></div>
+        </div>
+        <div class="place-list">
+          <p class="eyebrow">Hattaki keşifler</p>
+          <div id="place-side-list"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ---- OYUNLAR ---- -->
+    <section id="view-oyunlar" class="view">
+      <div class="ai-game ai-block">
+        <div class="top">
+          <div class="suggestion-icon">🎲</div>
+          <div class="body">
+            <h3>Bana bir parti oyunu öner</h3>
+            <p>Ortamı ve grubunu seç, ekrandan kalkıp oynayacağınız bir oyun önerelim.</p>
+          </div>
+        </div>
+        <div class="select-row">
+          <select id="g-ortam"><option>İç mekan</option><option>Dış mekan</option></select>
+          <select id="g-boyut"><option>2-4 kişi</option><option>5-8 kişi</option><option>9+ kişi</option></select>
+          <select id="g-sure"><option>Kısa (10 dk)</option><option>Uzun (30 dk+)</option></select>
+          <button class="soft" onclick="suggestGame()">Oyun öner</button>
+        </div>
+        <div class="result-box" id="game-result"></div>
+      </div>
+
+      <div class="ai-game ai-block">
+        <div class="top">
+          <div class="suggestion-icon">📍</div>
+          <div class="body">
+            <h3>Gezilecek yer öner</h3>
+            <p>Şehrini seç, hattaki diğer kullanıcıların keşfettiği bir mekan önerelim.</p>
+          </div>
+        </div>
+        <div class="select-row">
+          <select id="p-sehir"><option>İstanbul</option><option>Ankara</option><option>İzmir</option><option>Bursa</option><option>Antalya</option></select>
+          <button class="soft" onclick="suggestPlace()">Yer öner</button>
+        </div>
+        <div class="result-box" id="place-result"></div>
+      </div>
+
+      <div class="section-heading">
+        <h2>Hazır parti oyunu şablonları</h2>
+      </div>
+      <div class="game-grid" id="game-templates"></div>
+    </section>
+
+    <!-- ---- ANILAR ---- -->
+    <section id="view-anilar" class="view">
+      <div class="dropzone" onclick="document.getElementById('mem-file').click()">
+        <input type="file" id="mem-file" accept="image/*" class="hidden" onchange="previewMemory(event)">
+        <span>Fotoğraf yüklemek için tıkla</span>
+        <small>Konum ve kısa bir not ekleyebilirsin</small>
+      </div>
+      <img id="mem-preview-img" class="mem-preview-img hidden">
+      <div style="display:grid;gap:12px;margin-bottom:16px">
+        <label style="font-size:13px;font-weight:700">Konum
+          <input type="text" id="mem-loc" placeholder="Örn. Moda Sahili, İstanbul" style="margin-top:6px">
+        </label>
+        <label style="font-size:13px;font-weight:700">Kısa not
+          <textarea id="mem-note" rows="2" placeholder="Bu anı hakkında birkaç kelime..." style="width:100%;margin-top:6px;border:1px solid #dbe3f1;border-radius:10px;padding:12px;font:inherit"></textarea>
+        </label>
+      </div>
+      <button class="primary" onclick="addMemory()">Anıyı paylaş</button>
+
+      <div class="section-heading">
+        <h2>Anılarım</h2>
+      </div>
+      <div class="memory-grid" id="my-memories"></div>
+    </section>
+
+    <!-- ---- PROFIL ---- -->
+    <section id="view-profil" class="view">
+      <div class="profile-cover"></div>
+      <div class="profile-card">
+        <button class="soft" onclick="logout()">Çıkış yap</button>
+        <div class="profile-avatar avatar" id="p-avatar" style="display:flex;align-items:center;justify-content:center;font-size:26px">?</div>
+        <h2 id="p-username">@kullanici</h2>
+        <p>Hattaki yeni yolcu</p>
+        <div class="profile-stats">
+          <div><strong id="p-mem-count" style="font-size:20px">0</strong><span>anı</span></div>
+          <div><strong id="p-game-count" style="font-size:20px">0</strong><span>oyun</span></div>
+        </div>
+
+        <div class="compact">
+          <p class="eyebrow">Arkadaşlarını davet et</p>
+          <div class="invite-box">
+            <code id="invite-link">hatzone.app/davet/xxxxx</code>
+            <button class="soft" onclick="copyInvite()">Kopyala</button>
+          </div>
+        </div>
+
+        <div class="compact">
+          <p class="eyebrow">Görünüm rengi</p>
+          <div class="swatch-row">
+            <div class="swatch active" style="background:#2864eb" onclick="setAccent('#2864eb', this)"></div>
+            <div class="swatch" style="background:#0ea5a4" onclick="setAccent('#0ea5a4', this)"></div>
+            <div class="swatch" style="background:#7c3aed" onclick="setAccent('#7c3aed', this)"></div>
+            <div class="swatch" style="background:#f97316" onclick="setAccent('#f97316', this)"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<nav class="bottom-nav">
+  <button class="active" data-view="feed" onclick="goTo('feed')">🧭<span>Akış</span></button>
+  <button data-view="harita" onclick="goTo('harita')">🗺️<span>Harita</span></button>
+  <button data-view="oyunlar" onclick="goTo('oyunlar')">🎮<span>Oyunlar</span></button>
+  <button data-view="anilar" onclick="goTo('anilar')">📸<span>Anılar</span></button>
+  <button data-view="profil" onclick="goTo('profil')">👤<span>Profil</span></button>
+</nav>
+
+<dialog id="truth-game" class="game-dialog">
+  <button class="close" aria-label="Oyunu kapat" onclick="closeGame('truth-game')">×</button>
+  <p class="eyebrow">2–4 KİŞİ · KISA TUR</p>
+  <h3>İki Doğru Bir Yalan</h3>
+  <p class="dialog-copy" id="truth-instruction">Üç cümle yaz. Birini yalan olarak işaretle, sonra telefonunu arkadaşına ver.</p>
+  <div id="truth-setup" class="truth-entry">
+    <input id="truth-one" maxlength="100" placeholder="Birinci cümle">
+    <input id="truth-two" maxlength="100" placeholder="İkinci cümle">
+    <input id="truth-three" maxlength="100" placeholder="Üçüncü cümle">
+    <select id="truth-lie" class="dialog-field"><option value="0">Birinci cümle yalan</option><option value="1">İkinci cümle yalan</option><option value="2">Üçüncü cümle yalan</option></select>
+    <button class="primary" onclick="startTruthRound()">Tahmin turunu başlat</button>
+  </div>
+  <div id="truth-guess" class="hidden"></div>
+</dialog>
+
+<dialog id="sis-game" class="game-dialog">
+  <button class="close" aria-label="Oyunu kapat" onclick="closeGame('sis-game')">×</button>
+  <p class="eyebrow">2+ KİŞİ · HIZLI TUR</p>
+  <h3>Şehir İsim Hayvan</h3>
+  <p class="dialog-copy">Bir harf seç, süreyi başlat ve herkes kendi ekranına cevaplarını yazsın.</p>
+  <div class="select-row"><select id="sis-letter"><option>A</option><option>B</option><option>C</option><option>D</option><option>E</option><option>K</option><option>M</option><option>S</option></select><button class="soft" onclick="newSisLetter()">Harf değiştir</button></div>
+  <div class="sis-board">
+    <label class="sis-field">Şehir<input id="sis-city" placeholder="İstanbul"></label>
+    <label class="sis-field">İsim<input id="sis-name" placeholder="Ayşe"></label>
+    <label class="sis-field">Hayvan<input id="sis-animal" placeholder="At"></label>
+    <label class="sis-field">Eşya<input id="sis-item" placeholder="Anahtar"></label>
+  </div>
+  <div id="sis-status" class="sis-score">Hazır olduğunda turu başlat.</div>
+  <button class="primary" id="sis-start" onclick="startSisRound()">60 saniyelik turu başlat</button>
+</dialog>
+
+<div class="toast" id="toast"></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+<script>
+/* ===================== MOCK DATA ===================== */
+let currentUser = null;
+let myMemories = [];
+let gameCount = 0;
+let authMode = 'login';
+
+const avatarColors = ['#2864eb','#0ea5a4','#7c3aed','#f97316','#ef4444','#13213e'];
+const photoClasses = ['photo-one','photo-two','photo-three'];
+function colorFor(name){ let h=0; for(const c of name) h+=c.charCodeAt(0); return avatarColors[h % avatarColors.length]; }
+
+const feedSeed = [
+  {user:'defnek', loc:'Kadıköy, İstanbul', note:'Bahariye\'de rastgele sokak müzisyenlerine denk geldik, harika bir akşamdı.', emoji:'🎸'},
+  {user:'muratb', loc:'Kızılay, Ankara', note:'Kampüsten 3 arkadaş toplandık, ilk kez "İki Doğru Bir Yalan" oynadık, çok güldük.', emoji:'🎲'},
+  {user:'elifa', loc:'Alsancak, İzmir', note:'Sahil kenarında gün batımını yakaladık, HAT-ZONE\'dan öğrendiğim bir nokta.', emoji:'🌅'},
+  {user:'canery', loc:'Nilüfer, Bursa', note:'Yeni tanıştığım grupla parti oyunu önerisiyle buz kırdık.', emoji:'🧊'}
+];
+
+const gameTemplates = [
+  {name:'İki Doğru Bir Yalan', ortam:'İç mekan', boyut:'2-4 kişi', sure:'Kısa (10 dk)', desc:'Herkes kendisiyle ilgili iki doğru bir yalan söyler, diğerleri yalanı bulmaya çalışır.', c:'yellow'},
+  {name:'Mafya', ortam:'İç mekan', boyut:'9+ kişi', sure:'Uzun (30 dk+)', desc:'Gizli rollerle oynanan klasik grup çıkarım oyunu, kalabalık gruplarda çok eğlenceli.', c:'pink'},
+  {name:'Şehir İsim Hayvan', ortam:'İç mekan', boyut:'5-8 kişi', sure:'Kısa (10 dk)', desc:'Bir harf seçilir, herkes o harfle başlayan şehir, isim, hayvan yazar; hız ve bilgi yarışır.', c:'mint'},
+  {name:'Görünmez İp', ortam:'Dış mekan', boyut:'5-8 kişi', sure:'Kısa (10 dk)', desc:'Elleri birbirine değmeden grup halinde bir nesneyi taşımaya çalışırsınız, koordinasyon oyunu.', c:'yellow'},
+  {name:'Fısıltı Treni', ortam:'İç mekan', boyut:'9+ kişi', sure:'Kısa (10 dk)', desc:'Bir cümle kulaktan kulağa fısıldanır, sonda ne hale geldiğine birlikte gülersiniz.', c:'pink'},
+  {name:'Hazine Avı', ortam:'Dış mekan', boyut:'9+ kişi', sure:'Uzun (30 dk+)', desc:'Konum tabanlı ipuçlarıyla bir bölgede saklı nesneleri ya da noktaları bulmaya çalışırsınız.', c:'mint'},
+  {name:'Kim Bilir', ortam:'İç mekan', boyut:'2-4 kişi', sure:'Kısa (10 dk)', desc:'Grup hakkında sorular sorulur, herkes cevabı en çok kime uyduğunu düşünüyorsa ona işaret eder.', c:'yellow'},
+  {name:'Karanlıkta Yönlendirme', ortam:'Dış mekan', boyut:'2-4 kişi', sure:'Uzun (30 dk+)', desc:'Biriniz gözü kapalı, diğeri sesli yönlendirerek bir rotayı tamamlamaya çalışır, güven oyunu.', c:'pink'}
+];
+
+const placeSuggestions = {
+  'İstanbul':[['Moda Sahili','Deniz kenarında oturup sohbet etmek için sakin bir nokta.'],['Balat Sokakları','Renkli evler arasında yürüyüş ve fotoğraf molası.'],['Emirgan Korusu','Geniş çimenlik alanda grup piknikleri için ideal.']],
+  'Ankara':[['Kuğulu Park','Merkezi ve buluşmak için pratik bir yeşil alan.'],['Hamamönü','Tarihi sokaklarda kısa bir keşif yürüyüşü.'],['Genç Park','Akşam saatlerinde grup oyunları için uygun geniş alan.']],
+  'İzmir':[['Kordon Boyu','Gün batımında yürüyüş ve sohbet için klasik bir rota.'],['Alsancak Sahili','Arkadaş gruplarının buluşma noktası.'],['Kemeraltı Çarşısı','Kısa bir keşif ve atıştırmalık molası.']],
+  'Bursa':[['Botanik Park','Geniş alanıyla grup aktiviteleri için uygun.'],['Tarihi Çarşı','Kısa yürüyüş ve keşif için iyi bir güzergah.'],['Uludağ Eteği','Doğa yürüyüşü ve manzara molası.']],
+  'Antalya':[['Konyaaltı Sahili','Akşamüstü buluşmaları için geniş sahil şeridi.'],['Kaleiçi','Dar sokaklarda keşif ve fotoğraf molası.'],['Karaalioğlu Parkı','Deniz manzaralı sakin bir buluşma noktası.']]
+};
+
+const mapPins = [
+  {lat:40.99, lng:29.02, title:'Moda Sahili', note:'@defnek burada bir anı paylaştı: sokak müzisyenleri 🎸', img:'photo-one'},
+  {lat:39.92, lng:32.85, title:'Kızılay', note:'@muratb burada bir anı paylaştı: kampüs arkadaşlarıyla oyun gecesi 🎲', img:'photo-two'},
+  {lat:38.43, lng:27.14, title:'Alsancak Sahili', note:'@elifa burada bir anı paylaştı: gün batımı 🌅', img:'photo-three'},
+  {lat:40.19, lng:29.06, title:'Nilüfer', note:'@canery burada bir anı paylaştı: yeni tanışılan grup 🧊', img:'photo-one'}
+];
+
+/* ===================== TOAST ===================== */
+function showToast(msg){
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(window._toastTimer);
+  window._toastTimer = setTimeout(()=>t.classList.remove('show'), 2200);
+}
+
+/* ===================== AUTH ===================== */
+function switchAuthTab(){
+  authMode = authMode === 'login' ? 'signup' : 'login';
+  const isLogin = authMode === 'login';
+  document.getElementById('form-login').classList.toggle('hidden', !isLogin);
+  document.getElementById('form-signup').classList.toggle('hidden', isLogin);
+  document.getElementById('auth-title').textContent = isLogin ? 'Giriş yap' : 'Kayıt ol';
+  document.getElementById('auth-copy').textContent = isLogin ? 'Sonsuz akışa değil, gerçek buluşmalara giden hat. Devam etmek için giriş yap.' : 'Bir dakikada hesabını oluştur, hattına katıl.';
+  document.getElementById('switch-text').textContent = isLogin ? 'Hesabın yok mu?' : 'Zaten hesabın var mı?';
+  document.getElementById('switch-btn').textContent = isLogin ? 'Kayıt ol' : 'Giriş yap';
+}
+
+function doLogin(){
+  const email = document.getElementById('login-email').value.trim();
+  const pass = document.getElementById('login-pass').value;
+  const err = document.getElementById('login-err');
+  if(!email.includes('@')){ err.textContent='Geçerli bir e-posta gir.'; return; }
+  if(pass.length < 6){ err.textContent='Şifre en az 6 karakter olmalı.'; return; }
+  err.textContent='';
+  enterApp(email.split('@')[0]);
+}
+
+function doSignup(){
+  const user = document.getElementById('su-user').value.trim();
+  const email = document.getElementById('su-email').value.trim();
+  const pass = document.getElementById('su-pass').value;
+  const err = document.getElementById('su-err');
+  if(user.length < 3){ err.textContent='Kullanıcı adı en az 3 karakter olmalı.'; return; }
+  if(!email.includes('@')){ err.textContent='Geçerli bir e-posta gir.'; return; }
+  if(pass.length < 6){ err.textContent='Şifre en az 6 karakter olmalı.'; return; }
+  err.textContent='';
+  enterApp(user);
+}
+
+function enterApp(username){
+  currentUser = username;
+  document.getElementById('screen-auth').classList.add('hidden');
+  document.getElementById('screen-app').classList.remove('hidden');
+  document.getElementById('p-username').textContent = '@'+username;
+  const initial = username.charAt(0).toUpperCase();
+  document.getElementById('p-avatar').textContent = initial;
+  document.getElementById('p-avatar').style.background = colorFor(username);
+  document.getElementById('topbar-avatar').textContent = initial;
+  document.getElementById('topbar-avatar').style.background = colorFor(username);
+  document.getElementById('invite-link').textContent = 'hatzone.app/davet/'+Math.random().toString(36).slice(2,8);
+  renderFeed();
+  renderGameTemplates();
+  renderPlaceSide();
+  initMap();
+  goTo('feed');
+}
+
+function logout(){
+  currentUser = null;
+  document.getElementById('screen-app').classList.add('hidden');
+  document.getElementById('screen-auth').classList.remove('hidden');
+}
+
+/* ===================== NAV ===================== */
+const titles = {feed:'Akış', harita:'Harita', oyunlar:'Oyunlar', anilar:'Anılarım', profil:'Profil'};
+function goTo(view){
+  document.querySelectorAll('.view').forEach(s=>s.classList.remove('active'));
+  document.getElementById('view-'+view).classList.add('active');
+  document.getElementById('view-title').textContent = titles[view];
+  document.querySelectorAll('.nav-link').forEach(s=>s.classList.toggle('active', s.dataset.view===view));
+  document.querySelectorAll('.bottom-nav button').forEach(s=>s.classList.toggle('active', s.dataset.view===view));
+  if(view==='harita' && window._map){ setTimeout(()=>window._map.invalidateSize(), 80); }
+}
+
+/* ===================== AKIŞ ===================== */
+function renderFeed(){
+  const list = document.getElementById('feed-list');
+  list.innerHTML = feedSeed.map((item,i)=>`
+    <div class="feed-card">
+      <div class="feed-photo ${photoClasses[i%3]}">${item.emoji}</div>
+      <div style="flex:1">
+        <div class="feed-head">
+          <div class="mini-avatar" style="background:${colorFor(item.user)}">${item.user.charAt(0).toUpperCase()}</div>
+          <div class="feed-user">@${item.user}</div>
+          <div class="feed-time">bugün</div>
+        </div>
+        <div class="feed-loc">📍 ${item.loc}</div>
+        <p class="feed-note">${item.note}</p>
+      </div>
+    </div>
+  `).join('');
+}
+
+/* ===================== HARITA ===================== */
+function initMap(){
+  if(window._map) return;
+  const map = L.map('map').setView([39.0, 35.2], 5.4);
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; OpenStreetMap katkıda bulunanları'
+  }).addTo(map);
+  mapPins.forEach(p=>{
+    L.marker([p.lat,p.lng]).addTo(map).bindPopup(`<b>${p.title}</b><br>${p.note}`);
+  });
+  window._map = map;
+}
+
+function renderPlaceSide(){
+  document.getElementById('place-side-list').innerHTML = mapPins.map(p=>`
+    <div class="place-card">
+      <div class="place-image ${p.img}"></div>
+      <div>
+        <strong>${p.title}</strong>
+        <p>${p.note}</p>
+      </div>
+    </div>
+  `).join('');
+}
+
+/* ===================== OYUNLAR ===================== */
+function renderGameTemplates(){
+  const grid = document.getElementById('game-templates');
+  grid.innerHTML = gameTemplates.map(g=>`
+    <div class="game-card ${g.c}">
+      <span>🎲</span>
+      <h3>${g.name}</h3>
+      <div class="tag-row">
+        <span class="chip">${g.ortam}</span>
+        <span class="chip">${g.boyut}</span>
+        <span class="chip">${g.sure}</span>
+      </div>
+      <p>${g.desc}</p>
+      <button class="start-game" onclick="playGame('${g.name.replace(/'/g,"")}')">Bu oyunu oynadım</button>
+    </div>
+  `).join('');
+}
+
+function playGame(name){
+  if(name==='İki Doğru Bir Yalan'){
+    resetTruthGame();
+    document.getElementById('truth-game').showModal();
+    return;
+  }
+  if(name==='Şehir İsim Hayvan'){
+    resetSisGame();
+    document.getElementById('sis-game').showModal();
+    return;
+  }
+  gameCount++;
+  document.getElementById('p-game-count').textContent = gameCount;
+  showToast('"'+name+'" oynadın olarak işaretlendi 🎉');
+}
+
+function closeGame(id){
+  clearInterval(window._sisTimer);
+  document.getElementById(id).close();
+}
+
+function resetTruthGame(){
+  document.getElementById('truth-setup').classList.remove('hidden');
+  document.getElementById('truth-guess').classList.add('hidden');
+  document.getElementById('truth-instruction').textContent='Üç cümle yaz. Birini yalan olarak işaretle, sonra telefonunu arkadaşına ver.';
+  ['truth-one','truth-two','truth-three'].forEach(id=>document.getElementById(id).value='');
+}
+
+function startTruthRound(){
+  const statements=['truth-one','truth-two','truth-three'].map(id=>document.getElementById(id).value.trim());
+  if(statements.some(s=>s.length<3)){ showToast('Üç cümleyi de yazmalısın.'); return; }
+  const lie=Number(document.getElementById('truth-lie').value);
+  document.getElementById('truth-setup').classList.add('hidden');
+  document.getElementById('truth-instruction').textContent='Sıradaki oyuncu: Sence hangisi yalan?';
+  const guess=document.getElementById('truth-guess');
+  guess.classList.remove('hidden');
+  guess.innerHTML=statements.map((statement,index)=>`<button class="truth-card" onclick="judgeTruth(${index},${lie})">${index+1}. ${escapeHtml(statement)}</button>`).join('');
+  gameCount++;
+  document.getElementById('p-game-count').textContent=gameCount;
+}
+
+function judgeTruth(choice, lie){
+  document.querySelectorAll('#truth-guess .truth-card').forEach((card,index)=>{
+    card.disabled=true;
+    card.classList.add(index===lie?'correct':'wrong');
+  });
+  document.getElementById('truth-instruction').textContent=choice===lie ? 'Doğru tahmin! Yalanı buldun. 🎉' : 'Bu doğruydu; yalan yeşil karttaydı.';
+}
+
+function resetSisGame(){
+  clearInterval(window._sisTimer);
+  ['sis-city','sis-name','sis-animal','sis-item'].forEach(id=>document.getElementById(id).value='');
+  document.getElementById('sis-status').textContent='Hazır olduğunda turu başlat.';
+  document.getElementById('sis-start').textContent='60 saniyelik turu başlat';
+  document.getElementById('sis-start').disabled=false;
+}
+
+function newSisLetter(){
+  const select=document.getElementById('sis-letter');
+  select.selectedIndex=Math.floor(Math.random()*select.options.length);
+  showToast('Yeni harf: '+select.value);
+}
+
+function startSisRound(){
+  clearInterval(window._sisTimer);
+  let seconds=60;
+  const status=document.getElementById('sis-status');
+  const button=document.getElementById('sis-start');
+  button.disabled=true;
+  status.textContent=`Harf ${document.getElementById('sis-letter').value} · ${seconds} saniye kaldı`;
+  window._sisTimer=setInterval(()=>{
+    seconds--;
+    status.textContent=`Harf ${document.getElementById('sis-letter').value} · ${seconds} saniye kaldı`;
+    if(seconds<=0){
+      clearInterval(window._sisTimer);
+      const filled=['sis-city','sis-name','sis-animal','sis-item'].filter(id=>document.getElementById(id).value.trim()).length;
+      status.textContent=`Tur bitti! ${filled} cevap girdin. Grubunla cevaplarını karşılaştırıp puanlayın.`;
+      button.textContent='Yeni tur başlat';
+      button.disabled=false;
+      gameCount++;
+      document.getElementById('p-game-count').textContent=gameCount;
+      showToast('Tur tamamlandı 🎉');
+    }
+  },1000);
+}
+
+function escapeHtml(value){
+  const area=document.createElement('textarea');
+  area.textContent=value;
+  return area.innerHTML;
+}
+
+function suggestGame(){
+  const ortam = document.getElementById('g-ortam').value;
+  const boyut = document.getElementById('g-boyut').value;
+  const sure = document.getElementById('g-sure').value;
+  let matches = gameTemplates.filter(g=>g.ortam===ortam && g.boyut===boyut && g.sure===sure);
+  if(matches.length===0) matches = gameTemplates.filter(g=>g.ortam===ortam && g.boyut===boyut);
+  if(matches.length===0) matches = gameTemplates.filter(g=>g.ortam===ortam);
+  if(matches.length===0) matches = gameTemplates;
+  const pick = matches[Math.floor(Math.random()*matches.length)];
+  const box = document.getElementById('game-result');
+  box.style.display='block';
+  box.innerHTML = `<b>${pick.name}</b><br>${pick.desc}<br><span style="opacity:.7">${ortam} · ${boyut} · ${sure} grubuna uygun.</span>`;
+}
+
+function suggestPlace(){
+  const sehir = document.getElementById('p-sehir').value;
+  const list = placeSuggestions[sehir];
+  const pick = list[Math.floor(Math.random()*list.length)];
+  const box = document.getElementById('place-result');
+  box.style.display='block';
+  box.innerHTML = `<b>${pick[0]}, ${sehir}</b><br>${pick[1]}`;
+}
+
+/* ===================== ANILAR ===================== */
+let pendingPhoto = null;
+function previewMemory(e){
+  const file = e.target.files[0];
+  if(!file) return;
+  const reader = new FileReader();
+  reader.onload = ()=>{
+    pendingPhoto = reader.result;
+    const img = document.getElementById('mem-preview-img');
+    img.src = pendingPhoto;
+    img.classList.remove('hidden');
+  };
+  reader.readAsDataURL(file);
+}
+
+function addMemory(){
+  const loc = document.getElementById('mem-loc').value.trim();
+  const note = document.getElementById('mem-note').value.trim();
+  if(!loc){ showToast('Lütfen bir konum yaz.'); return; }
+  myMemories.unshift({loc, note, photo: pendingPhoto});
+  pendingPhoto = null;
+  document.getElementById('mem-loc').value='';
+  document.getElementById('mem-note').value='';
+  document.getElementById('mem-preview-img').classList.add('hidden');
+  document.getElementById('mem-file').value='';
+  renderMyMemories();
+  showToast('Anı paylaşıldı ✨');
+}
+
+function renderMyMemories(){
+  document.getElementById('p-mem-count').textContent = myMemories.length;
+  const grid = document.getElementById('my-memories');
+  if(myMemories.length===0){
+    grid.innerHTML = `<p class="subtle">Henüz bir anın yok. Yukarıdan ilk anını ekle.</p>`;
+    return;
+  }
+  grid.innerHTML = myMemories.map((m,i)=>`
+    <div class="memory ${i===0 ? 'large' : ''}">
+      <div class="memory-photo ${m.photo ? '' : photoClasses[i%3]}">
+        ${m.photo ? `<img class="memory-photo-real" src="${m.photo}">` : '📍'}
+      </div>
+      <div>
+        <h3>${m.loc}</h3>
+        ${m.note ? `<p>${m.note}</p>` : ''}
+      </div>
+    </div>
+  `).join('');
+}
+
+/* ===================== PROFIL ===================== */
+function copyInvite(){
+  const text = document.getElementById('invite-link').textContent;
+  navigator.clipboard?.writeText('https://'+text).then(()=>showToast('Bağlantı kopyalandı'));
+}
+
+function setAccent(color, el){
+  document.documentElement.style.setProperty('--blue', color);
+  document.querySelectorAll('.swatch').forEach(s=>s.classList.remove('active'));
+  el.classList.add('active');
+}
+</script>
+</body>
+</html>
